@@ -6,7 +6,7 @@
 # An example controller showing a sample home page
 GET       /                               controllers.HomeController.index
 GET       /users                          controllers.UserController.findAllUser
-GET       /user/:id                       controllers.UserController.findById(id: reactivemongo.bson.BSONObjectID)
+GET       /user/id/:id                       controllers.UserController.findById(id: reactivemongo.bson.BSONObjectID)
 GET       /user/namaDepan/:namaDepan                controllers.UserController.findByNamaDepan(namaDepan: String)
 GET       /user/namaBelakang/:namaBelakang          controllers.UserController.findByNamaBelakang(namaBelakang: String)
 GET       /user/tempatLahir/:tempatLahir            controllers.UserController.findByTempatLahir(tempatLahir: String)
