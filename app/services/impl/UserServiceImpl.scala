@@ -17,10 +17,6 @@ class UserServiceImpl @Inject() (userRepository: UserRepository) (implicit ex: E
     } yield u
   }
 
-  override def findById(id: Option[BSONObjectID]): Future[Option[User]] = {
-    userRepository.findById(id)
-  }
-
   override def create(user: User) = {
     userRepository.create(user)
   }
@@ -31,5 +27,21 @@ class UserServiceImpl @Inject() (userRepository: UserRepository) (implicit ex: E
 
   override def update(user: User) = {
     userRepository.update(user)
+  }
+
+  override def findById(userID: Option[BSONObjectID]): Future[Option[User]] = {
+    userRepository.findById(userID)
+  }
+
+  override def findByNamaDepan(namaDepan: Option[String]): Future[Option[User]] = {
+    userRepository.findByNamaDepan(namaDepan)
+  }
+
+  override def findByNamaBelakang(namaBelakang: Option[String]): Future[Option[User]] = {
+    userRepository.findByNamaBelakang(namaBelakang)
+  }
+
+  override def findByTempatLahir(tempatLahir: Option[String]): Future[Option[User]] = {
+    userRepository.findByTempatLahir(tempatLahir)
   }
 }

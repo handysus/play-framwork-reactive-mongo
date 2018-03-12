@@ -22,6 +22,34 @@ class UserController @Inject()
       .map(Ok(_))
   }
 
+  def findById(id: BSONObjectID) = Action.async { implicit request =>
+    userService
+      .findById(Some(id))
+      .map(toJson(_))
+      .map(Ok(_))
+  }
+
+  def findByNamaDepan(namaDepan: String) = Action.async { implicit request =>
+    userService
+      .findByNamaDepan(Some(namaDepan))
+      .map(toJson(_))
+      .map(Ok(_))
+  }
+
+  def findByNamaBelakang(namaBelakang: String) = Action.async { implicit request =>
+    userService
+      .findByNamaBelakang(Some(namaBelakang))
+      .map(toJson(_))
+      .map(Ok(_))
+  }
+
+  def findByTempatLahir(tempatLahir: String) = Action.async { implicit request =>
+    userService
+      .findByTempatLahir(Some(tempatLahir))
+      .map(toJson(_))
+      .map(Ok(_))
+  }
+
   def createUser() = Action.async(parse.json) { implicit request =>
     request.body.validate[User].fold(
       _ => Future.successful(BadRequest(Json.obj("status" -> "Invalid"))),

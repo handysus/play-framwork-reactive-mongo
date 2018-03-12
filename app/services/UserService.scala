@@ -7,9 +7,16 @@ import reactivemongo.bson.BSONObjectID
 import scala.concurrent.Future
 
 trait UserService{
+
   def findAll(): Future[List[User]]
 
   def findById(id: Option[BSONObjectID]): Future[Option[User]]
+
+  def findByNamaDepan(namaDepan: Option[String]): Future[Option[User]]
+
+  def findByNamaBelakang(namaBelakang: Option[String]): Future[Option[User]]
+
+  def findByTempatLahir(tempatLahir: Option[String]): Future[Option[User]]
 
   def create(user: User): Future[Option[User]]
 

@@ -21,7 +21,9 @@ class UserRepositoryImpl @Inject()
   import reactivemongo.play.json._
 
   override def findAll(): Future[List[User]] = {
-    collection.flatMap(_.find(Json.obj()).cursor[User](ReadPreference.primary).collect[List](Int.MaxValue, Cursor.ContOnError[List[User]]()))
+    collection.flatMap(_.find(Json.obj())
+      .cursor[User](ReadPreference.primary)
+      .collect[List](Int.MaxValue, Cursor.ContOnError[List[User]]()))
   }
 
   override def findById(id: Option[BSONObjectID]) = {
@@ -32,8 +34,7 @@ class UserRepositoryImpl @Inject()
   override def create(user: User) = {
     val id = user._id.orElse(Some(BSONObjectID.generate()))
     val r = user.copy(
-      _id = id,
-      hasPremiumAccess = false
+      _id = id
     )
     for{
       _ <- collection.flatMap(_.insert[User](r))
@@ -57,9 +58,23 @@ class UserRepositoryImpl @Inject()
     val usr = user
     for{
       _ <- collection
-            .flatMap(_.update(s, usr))
-      r <- findById(user._id)
+        .flatMap(_.update(s, usr))
+      r <- findById(usr._id)
     } yield r
   }
-}
 
+  override def findByNamaDepan(namaDepan: Option[String]): Future[Option[User]] = {
+    val s = Json.obj("namaDepan" -> namaDepan)
+    collection.flatMap(_.find(s).one[User](ReadPreference.primary))
+  }
+
+  override def findByNamaBelakang(namaBelakang: Option[String]): Future[Option[User]] = {
+    val s = Json.obj("namaBelakang" -> namaBelakang)
+    collection.flatMap(_.find(s).one[User](ReadPreference.primary))
+  }
+
+  override def findByTempatLahir(tempatLahir: Option[String]): Future[Option[User]] = {
+    val s = Json.obj("tempatLahir" -> tempatLahir)
+    collection.flatMap(_.find(s).one[User](ReadPreference.primary))
+  }
+}

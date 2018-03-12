@@ -18,7 +18,7 @@ class UserCollection @Inject()(reactiveMongoApi: ReactiveMongoApi)(implicit ec: 
   def findByUserId() = {
     collection.flatMap(_.indexesManager.ensure(
       Index(
-        key = Seq(("userId", IndexType.Ascending)),
+        key = Seq(("_id", IndexType.Ascending)),
         name = Some("findByUserId"),
         unique = false,
         background = true
@@ -26,4 +26,28 @@ class UserCollection @Inject()(reactiveMongoApi: ReactiveMongoApi)(implicit ec: 
     ))
   }
   findByUserId()
+
+  def findByUserNamaDepan() = {
+    collection.flatMap(_.indexesManager.ensure(
+      Index(
+        key = Seq(("namaDepan", IndexType.Ascending)),
+        name = Some("findByUserNamaDepan"),
+        unique = false,
+        background = true
+      )
+    ))
+  }
+  findByUserNamaBelakang()
+
+  def findByUserNamaBelakang() = {
+    collection.flatMap(_.indexesManager.ensure(
+      Index(
+        key = Seq(("namaDepan", IndexType.Ascending)),
+        name = Some("findByUserNamaBelakang"),
+        unique = false,
+        background = true
+      )
+    ))
+  }
+  findByUserNamaBelakang()
 }
